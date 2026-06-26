@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPZ Digital Desa</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --warna-upz: #059669;        
+            --warna-upz-hover: #047857;  
+            --warna-aksen: #f59e0b;      
+            --warna-bg: #f8fafc;         
+            --warna-card: #ffffff;       
+            --warna-teks: #1e293b;       
+            --warna-mint: #ecfdf5;       
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--warna-bg);
+            color: var(--warna-teks);
+            line-height: 1.6;
+            padding-bottom: 80px; 
+        }
+         
+        header {
+            /* GANTI tautan di dalam url('...') dengan link gambar latar belakang Anda */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.60), rgba(255, 255, 255, 0.85)), url('https://raw.githubusercontent.com/dedekurniawan140488-svg/upz/refs/heads/main/f98df89eb8c262c811c40ef6aeab18c4.jpg');
+            background-size: cover;
+            background-position: center;
+            color: var(--warna-upz);
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        
+        .header-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .img-logo-kemenag {
+            height: 20px ; /* Tambahkan !important di ujung angka */
+            width: auto ;
+            object-fit: contain;
+        }
+
+        .logo-upz {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-upz h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--warna-upz);
+            line-height: 1.2;
+        }
+
+        .logo-upz p {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        main {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto; 
+            min-height: 70vh;
+        }
+
+        .halaman {
+            display: none;
+        }
+
+        .halaman.aktif {
+            display: block;
+        }
+
+        .seksi {
+            background: var(--warna-card);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .seksi h2 {
+            font-size: 1.15rem;
+            color: var(--warna-upz);
+            margin-bottom: 15px;
+            border-left: 4px solid var(--warna-upz);
+            padding-left: 10px;
+            font-weight: 700;
+        }
+
+        /* --- STYLE BARU: PAPAN PENGUMUMAN BERANTAI --- */
+        .grup-pengumuman {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .item-pengumuman {
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .item-pengumuman:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .judul-pengumuman {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .isi-pengumuman {
+            font-size: 0.88rem;
+            color: #475569;
+            white-space: pre-line;
+            padding-left: 18px;
+        }
+
+        .grid-keuangan {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .kartu-uang {
+            background: var(--warna-mint);
+            border: 1px solid #d1fae5;
+            padding: 15px 10px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .kartu-uang i {
+            font-size: 1.3rem;
+            color: var(--warna-upz);
+            margin-bottom: 6px;
+        }
+
+        .kartu-uang p.label-kas {
+            font-size: 0.75rem;
+            color: #475569;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .kartu-uang h3 {
+            font-size: 0.95rem;
+            color: #065f46;
+            font-weight: 800;
+            margin-top: 2px;
+            margin-bottom: 4px;
+        }
+
+        .sub-tersalurkan {
+            font-size: 0.68rem;
+            color: #64748b;
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 4px;
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        .info-bendahara {
+            font-size: 0.8rem;
+            color: #64748b;
+            text-align: center;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .kartu-penyaluran {
+            background: var(--warna-card);
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .img-penyaluran {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #f1f5f9;
+        }
+
+        .info-penyaluran {
+            padding: 15px;
+        }
+
+        .tgl-penyaluran {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .judul-penyaluran {
+            font-size: 1rem;
+            color: var(--warna-teks);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .nominal-penyaluran {
+            font-size: 0.9rem;
+            color: var(--warna-upz);
+            font-weight: 700;
+            background: var(--warna-mint);
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .tab-kalkulator-container {
+            display: flex;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .btn-tab-sub {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #64748b;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .btn-tab-sub.aktif {
+            background: white;
+            color: var(--warna-upz);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .form-kalkulator {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-kalkulator.aktif {
+            display: flex;
+        }
+
+        .grup-input {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .grup-input label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .grup-input input, .grup-input select {
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--warna-teks);
+            background-color: #f8fafc;
+            outline: none;
+        }
+
+        .grup-input input:focus, .grup-input select:focus {
+            border-color: var(--warna-upz);
+            background-color: #ffffff;
+        }
+
+        .btn-hitung {
+            background-color: var(--warna-upz);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .box-hasil {
+            background-color: var(--warna-mint);
+            border: 1px dashed var(--warna-upz);
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .box-hasil h4 {
+            font-size: 0.85rem;
+            color: #065f46;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .box-hasil .nominal-hasil {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--warna-upz);
+        }
+
+        .box-hasil .ket-hasil {
+            font-size: 0.8rem;
+            color: #475569;
+            margin-top: 4px;
+        }
+
+        .grid-pengurus {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .kartu-pengurus {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .avatar-pengurus {
+            width: 90px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .nama-pengurus {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--warna-teks);
+        }
+
+        .jabatan-pengurus {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--warna-card);
+            border-top: 1px solid #e2e8f0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #94a3b8; 
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 20%;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: var(--warna-upz); 
+        }
+
+        @media (max-width: 480px) {
+            .grid-keuangan {
+                grid-template-columns: 1fr; 
+                gap: 8px;
+            }
+            .kartu-uang {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 12px;
+                text-align: left;
+            }
+            .kartu-uang i { margin-bottom: 0; }
+            .sub-tersalurkan {
+                border-top: none;
+                border-left: 1px dashed #cbd5e1;
+                padding-top: 0;
+                padding-left: 8px;
+                margin-top: 0;
+                text-align: right;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <img src="https://raw.githubusercontent.com/dedekurniawan140488-svg/upz/refs/heads/main/logo%20upz.png" style="height: 80px !important; width: auto;" class="img-logo-kemenag" alt="Logo UPZ">
+            <div class="logo-upz">
+                <div id="judul-aplikasi-upz"><h1>UPZ DIGITAL</h1></div>
+                <p>UNIT PENGUMPUL ZAKAT DESA BANGUN JAYA</p>
+                <p>Jl. Tuanku Tambusai Tlp.009900099</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        
+        <!-- HALAMAN BERANDA DENGAN MULTI PENGUMUMAN DARI SPREADSHEET -->
+        <div id="beranda" class="halaman aktif">
+            <div class="seksi">
+                <h2>Papan Informasi</h2>
+                <div id="wadah-pengumuman" class="grup-pengumuman">
+                    <p style="color:#64748b; font-size:0.9rem;">Memuat pengumuman terbaru...</p>
+                </div>
+            </div>
+
+            <div class="grid-keuangan">
+                <div class="kartu-uang">
+                    <div>
+                        <i class="fas fa-wallet"></i>
+                        <p class="label-kas">Kas Zakat</p>
+                        <h3 id="saldo-zakat">Rp0</h3>
+                    </div>
+                    <div class="sub-tersalurkan" id="zakat-tersalurkan">Disalurkan: Rp0</div>
+                </div>
+
+                <div class="kartu-uang">
+                    <div>
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <p class="label-kas">Infak & Sedekah</p>
+                        <h3 id="saldo-infak">Rp0</h3>
+                    </div>
+                    <div class="sub-tersalurkan" id="infak-tersalurkan">Disalurkan: Rp0</div>
+                </div>
+
+                <div class="kartu-uang">
+                    <div>
+                        <i class="fas fa-calculator"></i>
+                        <p class="label-kas">Operasional</p>
+                        <h3 id="saldo-operasional">Rp0</h3>
+                    </div>
+                    <div class="sub-tersalurkan" style="border:none; color:#64748b;">Internal UPZ</div>
+                </div>
+            </div>
+
+            <p class="info-bendahara">
+                * Data di atas adalah rekapitulasi dana secara keseluruhan. Untuk rincian buku kas harian harian yang lebih detail, silakan hubungi Bendahara UPZ Desa.
+            </p>
+        </div>
+
+        <div id="penyaluran" class="halaman">
+            <div class="seksi">
+                <h2>Laporan Penyaluran Bantuan</h2>
+                <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 15px;">Bentuk pertanggungjawaban penyaluran dana kepada mustahik desa.</p>
+                <div id="konten-penyaluran"></div>
+            </div>
+        </div>
+
+        <div id="kalkulator" class="halaman">
+            <div class="seksi">
+                <h2>Kalkulator Zakat Digital</h2>
+                <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 15px;">
+                    Silakan pilih jenis zakat untuk menghitung kewajiban Anda secara akurat sesuai ketentuan syariat.
+                </p>
+                
+                <div style="background: #f1f5f9; padding: 12px; border-radius: 8px; font-size: 0.8rem; display: flex; justify-content: space-between; font-weight: 600; color: #475569; margin-bottom: 15px;">
+                    <span>Harga Beras: <span id="text-harga-beras" style="color: var(--warna-upz);">Memuat...</span>/kg</span>
+                    <span>Harga Emas: <span id="text-harga-emas" style="color: var(--warna-aksen);">Memuat...</span>/gram</span>
+                </div>
+
+                <div class="tab-kalkulator-container">
+                    <button id="btn-sub-profesi" class="btn-tab-sub aktif" onclick="gantiKalkulator('profesi')">Zakat Penghasilan</button>
+                    <button id="btn-sub-tani" class="btn-tab-sub" onclick="gantiKalkulator('tani')">Zakat Pertanian</button>
+                </div>
+
+                <div id="form-profesi" class="form-kalkulator aktif">
+                    <div class="grup-input">
+                        <label for="input-pendapatan">Total Pendapatan Bulanan (Gaji, Omset Dagang, atau Tabungan Setahun)</label>
+                        <input type="text" id="input-pendapatan" placeholder="Contoh: 7.500.000" oninput="formatRupiahInput(this)">
+                    </div>
+                    <button class="btn-hitung" onclick="hitungZakatProfesi()">Hitung Zakat Penghasilan</button>
+                </div>
+
+                <div id="form-tani" class="form-kalkulator">
+                    <div class="grup-input">
+                        <label for="input-uang-tani">Total Nilai Uang Hasil Penjualan Panen (Rupiah)</label>
+                        <input type="text" id="input-uang-tani" placeholder="Contoh: 10.000.000" oninput="formatRupiahInput(this)">
+                    </div>
+                    <div class="grup-input">
+                        <label for="select-pengairan">Sistem Pengairan Lahan Pertanian</label>
+                        <select id="select-pengairan">
+                            <option value="berbayar">Irigasi Berbayar / Menggunakan Mesin Pompa (Kadar Zakat 5%)</option>
+                            <option value="alami">Tadah Hujan / Aliran Sungai Alami Tanpa Biaya (Kadar Zakat 10%)</option>
+                        </select>
+                    </div>
+                    <button class="btn-hitung" onclick="hitungZakatPertanian()">Hitung Zakat Pertanian</button>
+                </div>
+                
+                <div id="hasil-kalkulator" class="box-hasil" style="margin-top: 20px;">
+                    <h4 id="status-wajib">HASIL PERHITUNGAN</h4>
+                    <div id="nominal-zakat" class="nominal-hasil">Rp0</div>
+                    <div id="penjelasan-zakat" class="ket-hasil"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="edukasi" class="halaman">
+            <div class="seksi">
+                <h2>Panduan & Edukasi</h2>
+                <div id="konten-edukasi" style="display: flex; flex-direction: column; gap: 12px;"></div>
+            </div>
+
+            <div class="seksi">
+                <h2>Susunan Pengurus UPZ</h2>
+                <div id="konten-pengurus" class="grid-pengurus"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <nav class="bottom-nav">
+        <div class="nav-item active" id="btn-nav-beranda" onclick="navigasiKe('beranda')">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </div>
+        <div class="nav-item" id="btn-nav-penyaluran" onclick="navigasiKe('penyaluran')">
+            <i class="fas fa-hand-holding-usd"></i>
+            <span>Penyaluran</span>
+        </div>
+        <div class="nav-item" id="btn-nav-kalkulator" onclick="navigasiKe('kalkulator')">
+            <i class="fas fa-calculator"></i>
+            <span>Kalkulator</span>
+        </div>
+        <div class="nav-item" id="btn-nav-edukasi" onclick="navigasiKe('edukasi')">
+            <i class="fas fa-info-circle"></i>
+            <span>Info UPZ</span>
+        </div>
+    </nav>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5w3yD7eFpkZvn972PoOFX3LwjBipLm0AQq797njVwvFAokc2DBoV8L-55GWjydA/exec";
+
+        let HARGA_BERAS_GLOBAL = 0;
+        let HARGA_EMAS_GLOBAL = 0;
+
+        function navigasiKe(idHalaman) {
+            document.querySelectorAll('.halaman').forEach(h => h.classList.remove('aktif'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            document.getElementById(idHalaman).classList.add('aktif');
+            document.getElementById('btn-nav-' + idHalaman).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function gantiKalkulator(jenis) {
+            document.querySelectorAll('.btn-tab-sub').forEach(b => b.classList.remove('aktif'));
+            document.querySelectorAll('.form-kalkulator').forEach(f => f.classList.remove('aktif'));
+            document.getElementById('hasil-kalkulator').style.display = "none";
+
+            if(jenis === 'profesi') {
+                document.getElementById('btn-sub-profesi').classList.add('aktif');
+                document.getElementById('form-profesi').classList.add('aktif');
+            } else {
+                document.getElementById('btn-sub-tani').classList.add('aktif');
+                document.getElementById('form-tani').classList.add('aktif');
+            }
+        }
+
+        async function muatDataUPZ() {
+            try {
+                const urlPembersihCache = SCRIPT_URL + "?_=" + new Date().getTime();
+                const respon = await fetch(urlPembersihCache);
+                const dataUPZ = await respon.json();
+
+                prosesBerandaDanKas(dataUPZ['beranda']);
+                prosesPapanPengumuman(dataUPZ['pengumenan'] || dataUPZ['pengumuman']); // Mengantisipasi salah ketik nama tab
+                prosesLaporanPenyaluran(dataUPZ['penyaluran']);
+                prosesEdukasiPanduan(dataUPZ['edukasi']);
+                prosesSusunanPengurus(dataUPZ['pengurus']);
+
+            } catch (err) {
+                console.error("Gagal menarik data UPZ:", err);
+            }
+        }
+
+        function dapatkanNilai(item, kataKunci) {
+            const kunciSesuai = Object.keys(item).find(k => k.toLowerCase().trim() === kataKunci.toLowerCase().trim());
+            if (!kunciSesuai) return null;
+            let nilai = item[kunciSesuai];
+            if (nilai && typeof nilai === 'string' && nilai.includes('T') && nilai.endsWith('Z')) {
+                try {
+                    const d = new Date(nilai);
+                    if (!isNaN(d)) return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+                } catch (e) {}
+            }
+            return nilai;
+        }
+
+        function formatKeRupiah(angka) {
+            if (isNaN(angka) || angka === null || angka === '') return "Rp0";
+            return "Rp" + parseFloat(angka).toLocaleString('id-ID', { maximumFractionDigits: 0 });
+        }
+
+        function formatRupiahInput(elemen) {
+            let nilaiBersih = elemen.value.replace(/\D/g, ""); 
+            if (nilaiBersih === "") {
+                elemen.value = "";
+                return;
+            }
+            elemen.value = parseFloat(nilaiBersih).toLocaleString('id-ID');
+        }
+
+        function prosesBerandaDanKas(data) {
+            if (!data || data.length === 0) return;
+            const barisUtama = data[0]; 
+
+            const judulSpreedsheet = dapatkanNilai(barisUtama, 'judul');
+            if(judulSpreedsheet) {
+                document.getElementById('judul-aplikasi-upz').innerHTML = `<h1>${judulSpreedsheet.toString().toUpperCase()}</h1>`;
+            }
+
+            const z_saldo = dapatkanNilai(barisUtama, 'saldo zakat') || 0;
+            const z_salur = dapatkanNilai(barisUtama, 'zakat tersalurkan') || 0;
+            const i_saldo = dapatkanNilai(barisUtama, 'saldo infak') || 0;
+            const i_salur = dapatkanNilai(barisUtama, 'infak tersalurkan') || 0;
+            const op_saldo = dapatkanNilai(barisUtama, 'saldo operasional') || 0;
+
+            HARGA_BERAS_GLOBAL = parseFloat(dapatkanNilai(barisUtama, 'harga beras')) || 15000;
+            HARGA_EMAS_GLOBAL = parseFloat(dapatkanNilai(barisUtama, 'harga emas')) || 1400000;
+
+            document.getElementById('saldo-zakat').innerText = formatKeRupiah(z_saldo);
+            document.getElementById('zakat-tersalurkan').innerText = "Disalurkan: " + formatKeRupiah(z_salur);
+            document.getElementById('saldo-infak').innerText = formatKeRupiah(i_saldo);
+            document.getElementById('infak-tersalurkan').innerText = "Disalurkan: " + formatKeRupiah(i_salur);
+            document.getElementById('saldo-operasional').innerText = formatKeRupiah(op_saldo);
+
+            document.getElementById('text-harga-beras').innerText = formatKeRupiah(HARGA_BERAS_GLOBAL);
+            document.getElementById('text-harga-emas').innerText = formatKeRupiah(HARGA_EMAS_GLOBAL);
+        }
+
+        // LOGIKA BARU: MEMPROSES MULTI PENGUMUMAN SEKALIGUS
+        function prosesPapanPengumuman(data) {
+            const wadah = document.getElementById('wadah-pengumuman');
+            if (!data || data.length === 0) {
+                wadah.innerHTML = '<p style="font-size:0.9rem; color:#64748b; font-style:italic;">Belum ada pengumuman resmi saat ini.</p>';
+                return;
+            }
+
+            // Urutkan berdasarkan kolom 'urutan'
+            const pengumumanUrut = [...data].sort((a, b) => {
+                let uA = parseInt(dapatkanNilai(a, 'urutan')) || 99;
+                let uB = parseInt(dapatkanNilai(b, 'urutan')) || 99;
+                return uA - uB;
+            });
+
+            let html = '';
+            pengumumanUrut.forEach(item => {
+                const judul = dapatkanNilai(item, 'judul') || 'Pengumuman';
+                const isi = dapatkanNilai(item, 'isi') || '';
+                
+                if (isi.trim() !== '') {
+                    html += `
+                        <div class="item-pengumuman">
+                            <div class="judul-pengumuman">📢 ${judul}</div>
+                            <div class="isi-pengumuman">${isi}</div>
+                        </div>
+                    `;
+                }
+            });
+            wadah.innerHTML = html;
+        }
+
+        function prosesLaporanPenyaluran(data) {
+            const wadah = document.getElementById('konten-penyaluran');
+            if (!data || data.length === 0) {
+                wadah.innerHTML = '<p style="font-size:0.9rem; color:#777;">Belum ada laporan penyaluran bantuan.</p>';
+                return;
+            }
+            let html = '';
+            const dataTerbalik = [...data].reverse();
+            dataTerbalik.forEach(item => {
+                const tgl = dapatkanNilai(item, 'tanggal') || '-';
+                const keg = dapatkanNilai(item, 'kegiatan') || 'Penyaluran Bantuan';
+                const nom = dapatkanNilai(item, 'nominal') || 0;
+                const fotoLink = dapatkanNilai(item, 'foto') || '';
+
+                html += `
+                    <div class="kartu-penyaluran">
+                        ${fotoLink ? `<img src="${fotoLink.toString().trim()}" class="img-penyaluran" alt="Dokumentasi" onerror="this.src='https://placehold.co/600x400?text=UPZ+Desa';">` : ''}
+                        <div class="info-penyaluran">
+                            <div class="tgl-penyaluran">🗓️ ${tgl}</div>
+                            <div class="judul-penyaluran">${keg}</div>
+                            <div class="nominal-penyaluran">Dana Tersalurkan: ${formatKeRupiah(nom)}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            wadah.innerHTML = html;
+        }
+
+        function prosesEdukasiPanduan(data) {
+            const wadah = document.getElementById('konten-edukasi');
+            if (!data || data.length === 0) {
+                wadah.innerHTML = '<p style="font-size:0.9rem; color:#777;">Materi edukasi belum diisi.</p>';
+                return;
+            }
+            let html = '';
+            data.forEach(item => {
+                const jdl = dapatkanNilai(item, 'judul panduan') || 'Informasi';
+                const ket = dapatkanNilai(item, 'penjelasan') || '-';
+                html += `
+                    <div style="background:#f8fafc; padding:15px; border-radius:8px; border-left:4px solid var(--warna-upz);">
+                        <h4 style="color:var(--warna-upz); font-size:0.95rem; font-weight:700; margin-bottom:4px;">${jdl}</h4>
+                        <p style="font-size:0.85rem; color:#475569; white-space: pre-line;">${ket}</p>
+                    </div>
+                `;
+            });
+            wadah.innerHTML = html;
+        }
+
+        function prosesSusunanPengurus(data) {
+            const wadah = document.getElementById('konten-pengurus');
+            if (!data || data.length === 0) {
+                wadah.innerHTML = '<p style="grid-column:1/-1; text-align:center;">Data pengurus kosong.</p>';
+                return;
+            }
+            const pengurusUrut = [...data].sort((a, b) => {
+                let uA = parseInt(dapatkanNilai(a, 'urutan')) || 99;
+                let uB = parseInt(dapatkanNilai(b, 'urutan')) || 99;
+                return uA - uB;
+            });
+            let html = '';
+            pengurusUrut.forEach(item => {
+                const nm = dapatkanNilai(item, 'nama') || '-';
+                const jbt = dapatkanNilai(item, 'jabatan') || 'Pengurus';
+                const fto = dapatkanNilai(item, 'foto') || '';
+                const fotoFinal = fto ? fto.toString().trim() : 'https://placehold.co/300x400?text=Foto';
+
+                html += `
+                    <div class="kartu-pengurus">
+                        <img src="${fotoFinal}" class="avatar-pengurus" alt="${nm}" onerror="this.src='https://placehold.co/300x400?text=Amil+UPZ';">
+                        <div class="nama-pengurus">${nm}</div>
+                        <div class="jabatan-pengurus">${jbt}</div>
+                    </div>
+                `;
+            });
+            wadah.innerHTML = html;
+        }
+
+        function hitungZakatProfesi() {
+            const teksPendapatan = document.getElementById('input-pendapatan').value.replace(/\./g, "");
+            const pendapatan = parseFloat(teksPendapatan) || 0;
+
+            const boxHasil = document.getElementById('hasil-kalkulator');
+            const txtStatus = document.getElementById('status-wajib');
+            const txtNominal = document.getElementById('nominal-zakat');
+            const txtPenjelasan = document.getElementById('penjelasan-zakat');
+
+            if (pendapatan <= 0) {
+                alert("Masukkan total nominal uang pendapatan Anda.");
+                return;
+            }
+
+            const nisabEmasBulanan = (85 * HARGA_EMAS_GLOBAL) / 12; 
+            boxHasil.style.display = "block"; 
+
+            if (pendapatan >= nisabEmasBulanan) {
+                const nilaiZakat = pendapatan * 0.025; 
+                txtStatus.innerText = "🟢 WAJIB MENUNAIKAN ZAKAT MAL/PROFESI";
+                txtStatus.style.color = "#047857";
+                txtNominal.innerText = formatKeRupiah(nilaiZakat);
+                txtPenjelasan.innerHTML = `Pendapatan Anda melampaui batas minimum nisab emas bulanan BAZNAS sebesar <b>${formatKeRupiah(nisabEmasBulanan)}</b> (setara 85 gram emas murni per tahun).`;
+            } else {
+                txtStatus.innerText = "🟡 BELUM WAJIB ZAKAT MAL/PROFESI";
+                txtStatus.style.color = "#b45309";
+                txtNominal.innerText = "Rp0";
+                txtPenjelasan.innerHTML = `Pendapatan belum mencapai batas nisab emas bulanan sebesar <b>${formatKeRupiah(nisabEmasBulanan)}</b>. Anda disarankan mengoptimalkannya lewat Infak atau Sedekah.`;
+            }
+        }
+
+        function hitungZakatPertanian() {
+            const teksUangTani = document.getElementById('input-uang-tani').value.replace(/\./g, "");
+            const totalUangTani = parseFloat(teksUangTani) || 0;
+            const sistemPengairan = document.getElementById('select-pengairan').value;
+
+            const boxHasil = document.getElementById('hasil-kalkulator');
+            const txtStatus = document.getElementById('status-wajib');
+            const txtNominal = document.getElementById('nominal-zakat');
+            const txtPenjelasan = document.getElementById('penjelasan-zakat');
+
+            if (totalUangTani <= 0) {
+                alert("Masukkan total nilai uang hasil panen Anda.");
+                return;
+            }
+
+            const nisabPertanianRupiah = 520 * HARGA_BERAS_GLOBAL; 
+            boxHasil.style.display = "block";
+
+            if (totalUangTani >= nisabPertanianRupiah) {
+                const kadar = (sistemPengairan === 'berbayar') ? 0.05 : 0.10; 
+                const persenTeks = (sistemPengairan === 'berbayar') ? "5%" : "10%";
+                const nilaiZakatRupiah = totalUangTani * kadar;
+
+                txtStatus.innerText = "🟢 WAJIB MENUNAIKAN ZAKAT PERTANIAN";
+                txtStatus.style.color = "#047857";
+                txtNominal.innerText = formatKeRupiah(nilaiZakatRupiah);
+                txtPenjelasan.innerHTML = `Hasil penjualan panen Anda melampaui batas nisab pertanian sebesar <b>${formatKeRupiah(nisabPertanianRupiah)}</b> (setara 520 kg beras). Kewajiban zakat pertanian Anda (<b>${persenTeks}</b>) adalah sebesar nominal di atas.`;
+            } else {
+                txtStatus.innerText = "🟡 BELUM WAJIB ZAKAT PERTANIAN";
+                txtStatus.style.color = "#b45309";
+                txtNominal.innerText = "Rp0";
+                txtPenjelasan.innerHTML = `Hasil penjualan panen Anda belum mencapai batas nisab pertanian sebesar <b>${formatKeRupiah(nisabPertanianRupiah)}</b> (setara 520 kg beras).`;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            muatDataUPZ();
+            setInterval(muatDataUPZ, 5 * 60 * 1000);
+        });
+    </script>
+</body>
+</html>
